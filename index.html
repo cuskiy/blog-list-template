@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>拾光 · 博客</title>
+<style>
+/* Tokens */
+:root {
+  color-scheme: light dark;
+
+  --bg:      light-dark(#ffffff, #101215);
+  --surface: light-dark(#f7f7f7, #191c21);
+  --surface-hover: light-dark(#efefef, #1f232a);
+  --text:    light-dark(#1b1e23, #e8eaed);
+  --muted:   light-dark(#666d78, #9ba3ae);
+  --border:  light-dark(#e4e5e8, #292e35);
+  --accent:  light-dark(#2563eb, #7aa7ff);
+
+  --font: system-ui, sans-serif;
+  --text-sm: 0.875rem;
+  --text-md: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --text-lg: clamp(1.125rem, 1.02rem + 0.5vw, 1.375rem);
+  --text-xl: clamp(2rem, 1.5rem + 2.5vw, 3.25rem);
+
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  0.75rem;
+  --space-md:  1.25rem;
+  --space-lg:  2rem;
+  --space-xl:  3rem;
+
+  --radius: 0.75rem;
+  --max-width: 68rem;
+  --page-pad: clamp(1rem, 4vw, 2rem);
+  --ease: 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --ease: 0s; }
+}
+
+/* Base */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-block-size: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font: var(--text-md)/1.65 var(--font);
+  overflow-wrap: anywhere;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--ease);
+}
+
+.container {
+  inline-size: 100%;
+  max-inline-size: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--page-pad);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 10;
+  background: var(--surface);
+
+  & .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs) var(--space-md);
+    padding-block: var(--space-sm);
+  }
+}
+
+.brand {
+  margin-inline-end: auto;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+
+  &:hover { color: var(--muted); }
+}
+
+/* Nav */
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav a {
+  display: block;
+  padding-block: var(--space-2xs);
+  color: var(--muted);
+  font-size: var(--text-sm);
+
+  &:hover { color: var(--text); }
+
+  &[aria-current="page"] {
+    color: var(--text);
+    font-weight: 600;
+  }
+}
+
+/* Main */
+main { padding-block: var(--space-xl); }
+
+.page-head {
+  display: grid;
+  gap: var(--space-xs);
+  margin-block-end: var(--space-lg);
+
+  & h1 {
+    margin: 0;
+    font-size: var(--text-xl);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  & p {
+    max-inline-size: 42ch;
+    margin: 0;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+}
+
+/* Post list */
+.post-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+  gap: var(--space-md);
+}
+
+.post {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--space-2xs);
+  padding: var(--space-md);
+  background: var(--surface);
+  border-radius: var(--radius);
+  transition: background-color var(--ease);
+
+  &:hover,
+  &:focus-within {
+    background: var(--surface-hover);
+
+    & h2 a { color: var(--accent); }
+  }
+
+  & h2 {
+    margin: 0;
+    font-size: var(--text-lg);
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+
+  /* Full-card hit area */
+  & h2 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+  }
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-sm);
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+
+.post-excerpt {
+  margin: 0;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+/* Footer */
+.site-footer {
+  padding-block: var(--space-lg);
+  border-block-start: 1px solid var(--border);
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="#">拾光</a>
+    <nav class="site-nav" aria-label="主导航">
+      <ul>
+        <li><a href="#" aria-current="page">文章</a></li>
+        <li><a href="#">笔记</a></li>
+        <li><a href="#">前端</a></li>
+        <li><a href="#">设计</a></li>
+        <li><a href="#">CSS</a></li>
+        <li><a href="#">性能</a></li>
+        <li><a href="#">工具</a></li>
+        <li><a href="#">归档</a></li>
+        <li><a href="#">关于</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="page-head">
+    <h1>最新文章</h1>
+    <p>一些关于前端、设计与写作的记录。</p>
+  </div>
+
+  <section class="post-list" aria-label="文章列表">
+
+    <article class="post">
+      <h2><a href="#">用 CSS 变量搭一套克制的设计系统</a></h2>
+      <p class="post-meta">
+        <time datetime="2025-06-12">2025 年 6 月 12 日</time>
+        <span>设计</span>
+      </p>
+      <p class="post-excerpt">变量不是越多越好。先把颜色、字号和间距收敛成三组 token，剩下的交给继承与默认值。</p>
+    </article>
+
+    <article class="post">
+      <h2><a href="#">容器查询：让组件真正响应自己的宽度</a></h2>
+      <p class="post-meta">
+        <time datetime="2025-06-05">2025 年 6 月 5 日</time>
+        <span>CSS</span>
+      </p>
+      <p class="post-excerpt">在组件根节点写一行 container-type，比铺一整套媒体查询断点更好维护，也更少出错。</p>
+    </article>
+
+    <article class="post">
+      <h2><a href="#">用 light-dark() 一行搞定明暗主题</a></h2>
+      <p class="post-meta">
+        <time datetime="2025-05-28">2025 年 5 月 28 日</time>
+        <span>CSS</span>
+      </p>
+      <p class="post-excerpt">color-scheme 配合 light-dark()，既不需要维护两份颜色表，也不需要一行脚本。</p>
+    </article>
+
+    <article class="post">
+      <h2><a href="#">十条让页面更稳的布局原则</a></h2>
+      <p class="post-meta">
+        <time datetime="2025-05-20">2025 年 5 月 20 日</time>
+        <span>布局</span>
+      </p>
+      <p class="post-excerpt">min-width: 0、overflow-wrap、aspect-ratio——都是些小改动，却能挡住绝大多数撑破与错位。</p>
+    </article>
+
+    <article class="post">
+      <h2><a href="#">为什么我放下了框架，回到原生 CSS</a></h2>
+      <p class="post-meta">
+        <time datetime="2025-05-11">2025 年 5 月 11 日</time>
+        <span>前端</span>
+      </p>
+      <p class="post-excerpt">不是反对框架，只是发现：现代 CSS 已经能覆盖我 90% 的日常场景。</p>
+    </article>
+
+    <article class="post">
+      <h2><a href="#">写作是另一种思考</a></h2>
+      <p class="post-meta">
+        <time datetime="2025-05-02">2025 年 5 月 2 日</time>
+        <span>随笔</span>
+      </p>
+      <p class="post-excerpt">把想法写下来的过程，往往就会暴露出“哪里其实还没想清楚”。</p>
+    </article>
+
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">© 2025 拾光 · 手写 HTML 与 CSS，无 JavaScript、无外部依赖。</div>
+</footer>
+
+</body>
+</html>
